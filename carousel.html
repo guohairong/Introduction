@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 700px;
+            height: 320px;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #box ul {
+            position: absolute;
+            bottom: 10px;
+            left: 190px;
+        }
+
+        #box ul li {
+            float: left;
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            color: #000;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 30px;
+            list-style: none;
+            margin: 5px;
+        }
+
+        #box .bg {
+            background: blue;
+            color: #00ff00;
+        }
+
+        #pic img {
+            width: 700px;
+            height: 320px;
+            float: left;
+        }
+
+        #left {
+            position: absolute;
+            left: 10px;
+            top: 140px;
+            display: none;
+        }
+
+        #right {
+            position: absolute;
+            right: 10px;
+            top: 140px;
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+<div id="box">
+    <div id="pic">
+        <img src="img/1.jpg">
+        <img src="img/2.jpg">
+        <img src="img/3.jpg">
+        <img src="img/4.jpg">
+        <img src="img/5.jpg">
+        <img src="img/6.jpg">
+    </div>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+</div>
+<script>
+    var pic = document.getElementById("pic"),
+            box = document.getElementById("box"),
+            imgs = pic.getElementsByTagName("img"),
+            lis = document.getElementsByTagName("ul")[0].getElementsByTagName("li");
+    var j = 0, timer = null;
+    function change() {
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].style.display = "none";
+            lis[i].className = "";
+        }
+        j++;
+        if (j > imgs.length - 1) {
+            j = 0;
+        }
+        imgs[j].style.display = "block";
+        lis[j].className = "bg";
+
+        for (var x = 0; x < lis.length; x++) {
+            lis[x].index = x;
+
+            lis[x].onmouseover = function () {
+                for (var y = 0; y < imgs.length; y++) {
+                    imgs[y].style.display = "none";
+                    lis[y].className = "";
+                }
+                imgs[this.index].style.display = "block";
+                lis[this.index].className = "bg";
+                j = this.index;
+            }
+        }
+    }
+
+    box.onmouseout = function () {
+        timer = setInterval(change, 2000);
+    }
+    box.onmouseover = function () {
+        clearInterval(timer);
+    };
+</script>
+</body>
+</html>
